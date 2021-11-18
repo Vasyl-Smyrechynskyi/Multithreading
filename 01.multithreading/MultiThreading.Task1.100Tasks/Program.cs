@@ -26,7 +26,7 @@ namespace MultiThreading.Task1._100Tasks
             Console.ReadLine();
         }
 
-        static void HundredTasks()
+        private static void HundredTasks()
         {
             var tasks = new Task[TaskAmount];
 
@@ -51,7 +51,7 @@ namespace MultiThreading.Task1._100Tasks
             }
         }
 
-        static void Output(int taskNumber, int iterationNumber)
+        private static void Output(int taskNumber, int iterationNumber)
         {
             Console.WriteLine($"Task #{taskNumber} – {iterationNumber}");
         }
