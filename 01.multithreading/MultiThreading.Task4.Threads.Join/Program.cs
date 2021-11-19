@@ -17,8 +17,7 @@ namespace MultiThreading.Task4.Threads.Join
     class Program
     {
         const int threadsCount = 10;
-        private static readonly object numberLock = new object();
-        private static Semaphore _semaphore = new Semaphore(5, 5);
+        private static Semaphore _semaphore = new Semaphore(3, 3);
 
         static void Main(string[] _)
         {
@@ -47,11 +46,8 @@ namespace MultiThreading.Task4.Threads.Join
                 return;
 
             _semaphore.WaitOne();
-            //lock (numberLock)
-            //{
-                Console.WriteLine($"b) Thread id is {Thread.CurrentThread.ManagedThreadId}. Number is {--count}");
-                ThreadPool.QueueUserWorkItem(new WaitCallback(CreateWithThreadPoolClassUsage), count);
-            //}
+            Console.WriteLine($"b) Thread id is {Thread.CurrentThread.ManagedThreadId}. Number is {--count}");
+            ThreadPool.QueueUserWorkItem(new WaitCallback(CreateWithThreadPoolClassUsage), count);
             _semaphore.Release();
         }
 
