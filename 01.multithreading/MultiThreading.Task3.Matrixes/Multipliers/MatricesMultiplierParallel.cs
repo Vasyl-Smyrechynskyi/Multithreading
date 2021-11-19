@@ -1,4 +1,6 @@
 ﻿using MultiThreading.Task3.MatrixMultiplier.Matrices;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MultiThreading.Task3.MatrixMultiplier.Multipliers
@@ -7,10 +9,10 @@ namespace MultiThreading.Task3.MatrixMultiplier.Multipliers
     {
         public IMatrix Multiply(IMatrix m1, IMatrix m2)
         {
-            var _resultMatrix = new Matrix(m1.RowCount, m2.ColCount);
+            var resultMatrix = new Matrix(m1.RowCount, m2.ColCount);
             Parallel.For(0L, m1.RowCount, new ParallelOptions { MaxDegreeOfParallelism = 16 }, (i) => 
             {
-                //Console.Write($"{Thread.CurrentThread.ManagedThreadId} ,");
+                var threadId = Thread.CurrentThread.ManagedThreadId;
                 for (var j = 0; j < m2.ColCount; j++)
                 {
                     long sum = 0;
@@ -19,11 +21,11 @@ namespace MultiThreading.Task3.MatrixMultiplier.Multipliers
                         sum += m1.GetElement(i, k) * m2.GetElement(k, j);
                     };
 
-                    _resultMatrix.SetElement(i, j, sum);
+                    resultMatrix.SetElement(i, j, sum);
                 }
             });
 
-            return _resultMatrix;
+            return resultMatrix;
         }
     }
 }
