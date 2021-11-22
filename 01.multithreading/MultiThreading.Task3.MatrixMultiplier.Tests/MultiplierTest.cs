@@ -1,8 +1,7 @@
-using System;
-using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MultiThreading.Task3.MatrixMultiplier.Matrices;
 using MultiThreading.Task3.MatrixMultiplier.Multipliers;
+using System;
 
 namespace MultiThreading.Task3.MatrixMultiplier.Tests
 {
@@ -23,33 +22,27 @@ namespace MultiThreading.Task3.MatrixMultiplier.Tests
             var parallelMultiplier = new MatricesMultiplierParallel();
             var matrixExecutionPrevail = 0L;
 
-            var watch = new Stopwatch();
-            watch.Stop();
-            for (long i = 1; i < long.MaxValue; i++)
+            for (var i = 1; i < 10000; i ++)
             {
                 var m1 = new Matrix(i, i, true);
                 var m2 = new Matrix(i, i, true);
 
-                watch.Start();
+                var regularExecutionTimeStart = DateTime.Now;
                 regularMultiplier.Multiply(m1, m2);
-                long regularExecutionTime = watch.ElapsedMilliseconds;
-                watch.Stop();
+                var regularExecutionTime = DateTime.Now - regularExecutionTimeStart;
 
-                watch.Start();
+                var parallelExecutionTimeStart = DateTime.Now;
                 parallelMultiplier.Multiply(m1, m2);
-                long parallelExecutionTime = watch.ElapsedMilliseconds;
-                watch.Stop();
+                var parallelExecutionTime = DateTime.Now - parallelExecutionTimeStart;
 
                 if (parallelExecutionTime < regularExecutionTime)
                 {
-                    matrixExecutionPrevail = parallelExecutionTime;
+                    matrixExecutionPrevail = i;
                     break;
                 }
             }
 
-            Console.WriteLine(matrixExecutionPrevail);
-            // todo: implement a test method to check the size of the matrix which makes parallel multiplication more effective than
-            // todo: the regular one
+            Assert.IsTrue(matrixExecutionPrevail > 0);
         }
 
         #region private methods

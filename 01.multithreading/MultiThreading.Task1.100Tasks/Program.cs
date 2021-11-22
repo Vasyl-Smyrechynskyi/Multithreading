@@ -13,7 +13,7 @@ namespace MultiThreading.Task1._100Tasks
         const int TaskAmount = 100;
         const int MaxIterationsCount = 1000;
 
-        static void Main(string[] args)
+        static void Main(string[] _)
         {
             Console.WriteLine(".Net Mentoring Program. Multi threading V1.");
             Console.WriteLine("1.	Write a program, which creates an array of 100 Tasks, runs them and waits all of them are not finished.");
@@ -32,12 +32,7 @@ namespace MultiThreading.Task1._100Tasks
 
             for (var i = 0; i < TaskAmount; i++)
             {
-                tasks[i] = new Task(PrintIterations);
-            }
-
-            foreach (var task in tasks)
-            {
-                task.Start();
+                tasks[i] = Task.Factory.StartNew(PrintIterations);
             }
 
             Task.WaitAll(tasks);
