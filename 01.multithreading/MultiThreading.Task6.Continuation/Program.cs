@@ -14,7 +14,7 @@ namespace MultiThreading.Task6.Continuation
 {
     class Program
     {
-        static void Main(string[] args)
+        async static Task Main(string[] args)
         {
             Console.WriteLine("Create a Task and attach continuations to it according to the following criteria:");
             Console.WriteLine("a.    Continuation task should be executed regardless of the result of the parent task.");
@@ -26,7 +26,7 @@ namespace MultiThreading.Task6.Continuation
 
             var cancellation = new CancellationTokenSource();
 
-            var mainTask = Task.Run(() =>
+            await Task.Run(() =>
                 {
                     Console.WriteLine($"Main task executed { Thread.CurrentThread.ManagedThreadId}");
                 })
